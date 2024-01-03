@@ -12,3 +12,13 @@
 - [ ] User-based Collaborative Filtering
 - [ ] Regression Model
 - [ ] ...
+
+## Initialization
+
+1. Download MovieLens 10M Dataset in zip format from the following URL.
+   - https://grouplens.org/datasets/movielens/10m/
+2. Unzip the downloaded zip file at a location you desire.
+3. Move the following files to `/dataset/movielens-10m/`.
+   - `movies.dat`
+   - `ratings.dat`
+   - `tags.dat`
