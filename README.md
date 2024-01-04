@@ -22,3 +22,7 @@
    - `movies.dat`
    - `ratings.dat`
    - `tags.dat`
+4. Install the required python packages.
+   ```bash
+   > pip install -r requirements.txt
+   ``` 

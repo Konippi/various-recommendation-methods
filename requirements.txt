@@ -1,0 +1,16 @@
+# formatter
+black
+
+# linter
+flake8
+
+# type checker
+mypy
+
+# sort imports
+isort
+
+# required packages
+numpy
+pandas
+pandas-stubs
