@@ -17,5 +17,5 @@ def get_root_dir() -> Path:
         root_dir: Path
             The root directory of the project
     """
-    root_dir = os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__)))))
+    root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__))))))
     return root_dir + os.path.sep

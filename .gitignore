@@ -1,5 +1,6 @@
 # dataset
 dataset/**/*.dat
 
-# pycache
+# cache
 **/__pycache__
+**/.pytest_cache
