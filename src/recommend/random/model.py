@@ -1,6 +1,10 @@
-# import numpy as np
-# from util import path
 import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__)))))))
+
+from src.recommend.util.dataset_loader import DatasetLoader
+from src.recommend.util.path import Path
 
 # class Random:
 #     def recommend(self, dataset, **kwargs):
@@ -11,6 +15,8 @@ import os
 
 
 if __name__ == "__main__":
-    print(os.path.abspath(__file__))
+    path = Path()
+    dataset_loader = DatasetLoader(path.get_local_path("dataset/movielens-10m/"))
+    dataset_loader.load()
     # model = Random()
     # model.run()
