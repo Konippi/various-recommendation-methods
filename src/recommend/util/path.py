@@ -18,5 +18,5 @@ class Path:
             root_dir: Path
                 The root directory of the project
         """
-        _root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__))))))
-        return _root + os.path.sep
+        __root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__))))))
+        return __root + os.path.sep
