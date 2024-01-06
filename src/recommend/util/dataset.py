@@ -2,16 +2,39 @@ import os
 from typing import Tuple
 
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 
-class DatasetLoader:
-    def __init__(self, data_dir: str, user_nums: int | None = None):
-        self.data_dir = data_dir
+class Dataset:
+    def __init__(self, dataset_dir: str, user_nums: int | None = None):
+        self.data_dir = dataset_dir
         self.user_nums = user_nums
+
+    def split_ratings(self, ratings: pd.DataFrame, test_size: float) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        """
+        Split the ratings dataset into train and test
+
+        Parameters
+        ----------
+            ratings: pd.DataFrame
+                ratings(index, user_id, movie_id, rating, timestamp)
+            test_size: float
+                Percentage of the dataset to use as test
+
+        Returns
+        -------
+            train: pd.DataFrame
+                ratings(index, user_id, movie_id, rating, timestamp)
+            test: pd.DataFrame
+                ratings(index, user_id, movie_id, rating, timestamp)
+        """
+        train, test = train_test_split(ratings, test_size=test_size)
+
+        return train, test
 
     def load(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """
-        Load the all datasets
+        Load all datasets
 
         Parameters
         ----------
@@ -29,9 +52,6 @@ class DatasetLoader:
         tags = self.__load_tags()
 
         movies, ratings = self.__preprocess(movies, ratings, tags)
-
-        print(movies)
-        print(ratings)
 
         return movies, ratings
 

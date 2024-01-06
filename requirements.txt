@@ -13,5 +13,5 @@ isort
 # required packages
 numpy
 pandas
-pandas-stubs
 pytest
+scikit-learn
