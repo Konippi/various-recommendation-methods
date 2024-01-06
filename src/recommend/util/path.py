@@ -1,21 +1,22 @@
 import os
-from typing import TypeAlias
-
-Path: TypeAlias = str
 
 
-def get_root_dir() -> Path:
-    """
-    Get the root directory of the project.
+class Path:
+    def __init__(self):
+        pass
 
-    Parameters
-    ----------
-        None
+    def get_root(self) -> str:
+        """
+        Get the root directory of the project.
 
-    Returns
-    -------
-        root_dir: Path
-            The root directory of the project
-    """
-    root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__))))))
-    return root_dir + os.path.sep
+        Parameters
+        ----------
+            None
+
+        Returns
+        -------
+            root_dir: Path
+                The root directory of the project
+        """
+        _root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__))))))
+        return _root + os.path.sep
