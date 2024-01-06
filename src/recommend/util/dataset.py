@@ -10,7 +10,7 @@ class Dataset:
         self.data_dir = dataset_dir
         self.user_nums = user_nums
 
-    def split_ratings(self, ratings: pd.DataFrame, test_size: float) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    def split_ratings(self, ratings: pd.DataFrame, test_size: float = 0.3) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """
         Split the ratings dataset into train and test
 
@@ -18,7 +18,7 @@ class Dataset:
         ----------
             ratings: pd.DataFrame
                 ratings(index, user_id, movie_id, rating, timestamp)
-            test_size: float
+            test_size: float (range: 0.0 ~ 1.0)
                 Percentage of the dataset to use as test
 
         Returns
