@@ -4,11 +4,10 @@ import sys
 sys.path.insert(0, os.getcwd())
 
 from abc import abstractclassmethod
-from typing import Tuple
 
 import pandas as pd
 
-from src.recommend.util.dataset import Dataset
+from src.recommend.dataset import Dataset
 from src.recommend.util.path import Path
 
 
@@ -19,10 +18,13 @@ class BaseRecommend:
         self.user_nums = user_nums
         self.test_size = test_size
 
-    def get_dataset(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    def get_dataset(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         movies, ratings = self.dataset.load()
         train, test = self.dataset.split_ratings(ratings, self.test_size)
         return train, test
+
+    def output(self, **kwargs):
+        print(kwargs)
 
     @abstractclassmethod
     def run(self):

@@ -1,5 +1,4 @@
 import os
-from typing import Tuple
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -10,7 +9,7 @@ class Dataset:
         self.data_dir = dataset_dir
         self.user_nums = user_nums
 
-    def load(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    def load(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """
         Load all datasets
 
@@ -98,7 +97,7 @@ class Dataset:
 
     def __preprocess(
         self, movies: pd.DataFrame, ratings: pd.DataFrame, tags: pd.DataFrame
-    ) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    ) -> tuple[pd.DataFrame, pd.DataFrame]:
         """
         Preprocess the datasets
 
@@ -135,7 +134,7 @@ class Dataset:
 
         return movies, ratings
 
-    def split_ratings(self, ratings: pd.DataFrame, test_size: float = 0.3) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    def split_ratings(self, ratings: pd.DataFrame, test_size: float = 0.3) -> tuple[pd.DataFrame, pd.DataFrame]:
         """
         Split the ratings dataset into train and test
 

@@ -27,7 +27,7 @@ class Evaluation:
             for user_id in true_user_id2movie_ids.keys()
         ]
 
-        return np.mean(scores)
+        return float(np.mean(scores))
 
     def __recall_at_k(self, true_movie_ids: list[int], predicted_movie_ids: list[int], k: int) -> float:
         """
@@ -74,7 +74,7 @@ class Evaluation:
             for user_id in true_user_id2movie_ids.keys()
         ]
 
-        return np.mean(scores)
+        return float(np.mean(scores))
 
     def __precision_at_k(self, true_movie_ids: list[int], predicted_movie_ids: list[int], k: int) -> float:
         """
