@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.metrics import mean_squared_error as mse
 
 
 class Evaluation:
@@ -96,3 +97,21 @@ class Evaluation:
             return 0.0
 
         return len(set(true_movie_ids) & set(predicted_movie_ids[:k])) / k
+
+    def calc_rmse(self, true_ratings: list[float], predicted_ratings: list[float]) -> float:
+        """
+        Calculate RMSE
+
+        Parameters
+        ----------
+        true_ratings : list[float]
+            list of truly rating
+        predicted_ratings : list[float]
+            list of predicted rating
+
+        Returns
+        -------
+        score: float
+            RMSE
+        """
+        return np.sqrt(mse(true_ratings, predicted_ratings))

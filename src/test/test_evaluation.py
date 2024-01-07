@@ -45,3 +45,31 @@ class Test_Evaluation:
     ):
         actual = self.__evaluation.calc_recall_at_k(true_user_id2movie_ids, predicted_user_id2movie_ids, k)
         assert np.isclose(actual, expected, atol=1e-3, rtol=1e-3)
+
+    @pytest.mark.parametrize(
+        [
+            "true_ratings",
+            "predicted_ratings",
+            "expected",
+        ],
+        [
+            pytest.param(
+                [1.0, 2.0, 3.0, 4.0, 5.0],
+                [1.0, 2.0, 3.0, 4.0, 5.0],
+                0.000,
+            ),
+            pytest.param(
+                [1.1, 1.2, 1.3, 1.4, 1.5],
+                [1.6, 1.7, 1.8, 1.9, 2.0],
+                0.500,
+            ),
+            pytest.param(
+                [0.5, 1.5, 2.5, 3.5],
+                [1.5, 2.5, 3.5, 4.5],
+                1.000,
+            ),
+        ],
+    )
+    def test_calc_rmse(self, true_ratings: list[float], predicted_ratings: list[float], expected: float):
+        actual = self.__evaluation.calc_rmse(true_ratings, predicted_ratings)
+        assert np.isclose(actual, expected, atol=1e-3, rtol=1e-3)
