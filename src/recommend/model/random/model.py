@@ -1,10 +1,11 @@
 import os
 import sys
+
+sys.path.insert(0, os.getcwd())
+
 from collections import defaultdict
 
 import numpy as np
-
-sys.path.insert(0, os.getcwd())
 
 from src.recommend.base_recommend import BaseRecommend
 

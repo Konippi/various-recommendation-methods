@@ -8,4 +8,4 @@ class TestPath:
 
     def test_get_root_dir(self):
         ROOT_DIR_NAME = "various-recommendation-methods"
-        assert self.__path.get_root().endswith(ROOT_DIR_NAME + os.path.sep)
+        assert self.__path.get_root_dir().endswith(ROOT_DIR_NAME + os.path.sep)

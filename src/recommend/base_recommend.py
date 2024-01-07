@@ -1,11 +1,12 @@
 import os
 import sys
+
+sys.path.insert(0, os.getcwd())
+
 from abc import abstractclassmethod
 from typing import Tuple
 
 import pandas as pd
-
-sys.path.insert(0, os.getcwd())
 
 from src.recommend.util.dataset import Dataset
 from src.recommend.util.path import Path
