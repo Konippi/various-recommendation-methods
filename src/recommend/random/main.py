@@ -1,7 +1,5 @@
 from model import Random
-
-TEST_SIZE = 0.2
-USER_NUMS = 1000
+from params import TEST_SIZE, USER_NUMS
 
 if __name__ == "__main__":
     model = Random(USER_NUMS, TEST_SIZE)
