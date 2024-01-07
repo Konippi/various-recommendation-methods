@@ -10,90 +10,6 @@ class Dataset:
         self.data_dir = dataset_dir
         self.user_nums = user_nums
 
-    def split_ratings(self, ratings: pd.DataFrame, test_size: float = 0.3) -> Tuple[pd.DataFrame, pd.DataFrame]:
-        """
-        Split the ratings dataset into train and test
-
-        Parameters
-        ----------
-            ratings: pd.DataFrame
-                ratings(index, user_id, movie_id, rating, timestamp)
-            test_size: float (range: 0.0 ~ 1.0)
-                Percentage of the dataset to use as test
-
-        Returns
-        -------
-            train: pd.DataFrame
-                ratings(index, user_id, movie_id, rating, timestamp)
-            test: pd.DataFrame
-                ratings(index, user_id, movie_id, rating, timestamp)
-        """
-        train, test = train_test_split(ratings, test_size=test_size)
-
-        return train, test
-
-    def load(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
-        """
-        Load all datasets
-
-        Parameters
-        ----------
-            None
-
-        Returns
-        -------
-            movies: pd.DataFrame
-                movies(index, movie_id, title, genres, tags)
-            ratings: pd.DataFrame
-                ratings(index, user_id, movie_id, rating, timestamp)
-        """
-        movies = self.__load_movies()
-        ratings = self.__load_ratings()
-        tags = self.__load_tags()
-
-        movies, ratings = self.__preprocess(movies, ratings, tags)
-
-        return movies, ratings
-
-    def __preprocess(
-        self, movies: pd.DataFrame, ratings: pd.DataFrame, tags: pd.DataFrame
-    ) -> Tuple[pd.DataFrame, pd.DataFrame]:
-        """
-        Preprocess the datasets
-
-        Parameters
-        ----------
-            movies: pd.DataFrame
-                movies(index, movie_id, title, genres)
-            ratings: pd.DataFrame
-                ratings(index, user_id, movie_id, rating, timestamp)
-            tags: pd.DataFrame
-                tags(index, user_id, movie_id, tag, timestamp)
-
-        Returns
-        -------
-            movies: pd.DataFrame
-                movies(index, movie_id, title, genres, tags)
-            ratings: pd.DataFrame
-                ratings(index, user_id, movie_id, rating, timestamp)
-        """
-
-        # unify tags to lowercase
-        tags["tag"] = tags.tag.str.lower()
-
-        # associate tags with movies
-        movie_with_tags = tags.groupby("movie_id").agg({"tag": list}).rename(columns={"tag": "tags"})
-        movies = movies.merge(movie_with_tags, on="movie_id", how="left")
-
-        if self.user_nums is None:
-            return movies, ratings
-
-        # limit the number of users
-        valid_user_ids = sorted(ratings.user_id.unique())[: self.user_nums]
-        ratings = ratings[ratings.user_id <= max(valid_user_ids)]
-
-        return movies, ratings
-
     def __load_movies(self) -> pd.DataFrame:
         """
         Load the movies dataset
@@ -156,3 +72,87 @@ class Dataset:
         )
 
         return tags
+
+    def __preprocess(
+        self, movies: pd.DataFrame, ratings: pd.DataFrame, tags: pd.DataFrame
+    ) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        """
+        Preprocess the datasets
+
+        Parameters
+        ----------
+            movies: pd.DataFrame
+                movies(index, movie_id, title, genres)
+            ratings: pd.DataFrame
+                ratings(index, user_id, movie_id, rating, timestamp)
+            tags: pd.DataFrame
+                tags(index, user_id, movie_id, tag, timestamp)
+
+        Returns
+        -------
+            movies: pd.DataFrame
+                movies(index, movie_id, title, genres, tags)
+            ratings: pd.DataFrame
+                ratings(index, user_id, movie_id, rating, timestamp)
+        """
+
+        # unify tags to lowercase
+        tags["tag"] = tags.tag.str.lower()
+
+        # associate tags with movies
+        movie_with_tags = tags.groupby("movie_id").agg({"tag": list}).rename(columns={"tag": "tags"})
+        movies = movies.merge(movie_with_tags, on="movie_id", how="left")
+
+        if self.user_nums is None:
+            return movies, ratings
+
+        # limit the number of users
+        valid_user_ids = sorted(ratings.user_id.unique())[: self.user_nums]
+        ratings = ratings[ratings.user_id <= max(valid_user_ids)]
+
+        return movies, ratings
+
+    def load(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        """
+        Load all datasets
+
+        Parameters
+        ----------
+            None
+
+        Returns
+        -------
+            movies: pd.DataFrame
+                movies(index, movie_id, title, genres, tags)
+            ratings: pd.DataFrame
+                ratings(index, user_id, movie_id, rating, timestamp)
+        """
+        movies = self.__load_movies()
+        ratings = self.__load_ratings()
+        tags = self.__load_tags()
+
+        movies, ratings = self.__preprocess(movies, ratings, tags)
+
+        return movies, ratings
+
+    def split_ratings(self, ratings: pd.DataFrame, test_size: float = 0.3) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        """
+        Split the ratings dataset into train and test
+
+        Parameters
+        ----------
+            ratings: pd.DataFrame
+                ratings(index, user_id, movie_id, rating, timestamp)
+            test_size: float (range: 0.0 ~ 1.0)
+                Percentage of the dataset to use as test
+
+        Returns
+        -------
+            train: pd.DataFrame
+                ratings(index, user_id, movie_id, rating, timestamp)
+            test: pd.DataFrame
+                ratings(index, user_id, movie_id, rating, timestamp)
+        """
+        train, test = train_test_split(ratings, test_size=test_size)
+
+        return train, test
