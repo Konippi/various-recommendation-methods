@@ -10,6 +10,29 @@ class Dataset:
         self.data_dir = dataset_dir
         self.user_nums = user_nums
 
+    def load(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        """
+        Load all datasets
+
+        Parameters
+        ----------
+            None
+
+        Returns
+        -------
+            movies: pd.DataFrame
+                movies(index, movie_id, title, genres, tags)
+            ratings: pd.DataFrame
+                ratings(index, user_id, movie_id, rating, timestamp)
+        """
+        movies = self.__load_movies()
+        ratings = self.__load_ratings()
+        tags = self.__load_tags()
+
+        movies, ratings = self.__preprocess(movies, ratings, tags)
+
+        return movies, ratings
+
     def __load_movies(self) -> pd.DataFrame:
         """
         Load the movies dataset
@@ -109,29 +132,6 @@ class Dataset:
         # limit the number of users
         valid_user_ids = sorted(ratings.user_id.unique())[: self.user_nums]
         ratings = ratings[ratings.user_id <= max(valid_user_ids)]
-
-        return movies, ratings
-
-    def load(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
-        """
-        Load all datasets
-
-        Parameters
-        ----------
-            None
-
-        Returns
-        -------
-            movies: pd.DataFrame
-                movies(index, movie_id, title, genres, tags)
-            ratings: pd.DataFrame
-                ratings(index, user_id, movie_id, rating, timestamp)
-        """
-        movies = self.__load_movies()
-        ratings = self.__load_ratings()
-        tags = self.__load_tags()
-
-        movies, ratings = self.__preprocess(movies, ratings, tags)
 
         return movies, ratings
 

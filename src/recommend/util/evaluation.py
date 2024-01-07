@@ -5,6 +5,29 @@ class Evaluation:
     def __init__(self):
         pass
 
+    def calc_recall_at_k(self, true_user_id2movie_ids: dict, predicted_user_id2movie_ids: dict, k: int = 10) -> float:
+        """
+        Calculate recall@k
+
+        Parameters
+        ----------
+        true_user2movies : dict
+            combination of user id and truly favorite movies
+        predicted_user2movies : dict
+            combination of user id and predicted favorite movies
+
+        Returns
+        -------
+        mean_scores : float
+            average of recall@k for all users
+        """
+        scores = [
+            self.__recall_at_k(true_user_id2movie_ids[user_id], predicted_user_id2movie_ids[user_id], k)
+            for user_id in true_user_id2movie_ids.keys()
+        ]
+
+        return np.mean(scores)
+
     def __recall_at_k(self, true_movie_ids: list[int], predicted_movie_ids: list[int], k: int) -> float:
         """
         Calculate recall@k
@@ -27,9 +50,11 @@ class Evaluation:
 
         return len(set(true_movie_ids) & set(predicted_movie_ids[:k])) / len(true_movie_ids)
 
-    def calc_recall_at_k(self, true_user_id2movie_ids: dict, predicted_user_id2movie_ids: dict, k: int = 10) -> float:
+    def calc_precision_at_k(
+        self, true_user_id2movie_ids: dict, predicted_user_id2movie_ids: dict, k: int = 10
+    ) -> float:
         """
-        Calculate recall@k
+        Calculate precision@k
 
         Parameters
         ----------
@@ -40,11 +65,11 @@ class Evaluation:
 
         Returns
         -------
-        mean_scores : float
-            average of recall@k for all users
+        mean_scores: float
+            average of precision@k for all users
         """
         scores = [
-            self.__recall_at_k(true_user_id2movie_ids[user_id], predicted_user_id2movie_ids[user_id], k)
+            self.__precision_at_k(true_user_id2movie_ids[user_id], predicted_user_id2movie_ids[user_id], k)
             for user_id in true_user_id2movie_ids.keys()
         ]
 
@@ -71,28 +96,3 @@ class Evaluation:
             return 0.0
 
         return len(set(true_movie_ids) & set(predicted_movie_ids[:k])) / k
-
-    def calc_precision_at_k(
-        self, true_user_id2movie_ids: dict, predicted_user_id2movie_ids: dict, k: int = 10
-    ) -> float:
-        """
-        Calculate precision@k
-
-        Parameters
-        ----------
-        true_user2movies : dict
-            combination of user id and truly favorite movies
-        predicted_user2movies : dict
-            combination of user id and predicted favorite movies
-
-        Returns
-        -------
-        mean_scores: float
-            average of precision@k for all users
-        """
-        scores = [
-            self.__precision_at_k(true_user_id2movie_ids[user_id], predicted_user_id2movie_ids[user_id], k)
-            for user_id in true_user_id2movie_ids.keys()
-        ]
-
-        return np.mean(scores)
