@@ -13,6 +13,8 @@ from src.recommend.evaluation import Evaluation
 
 
 class Random(BaseRecommend):
+    __USER_NUMS: int = 1000
+    __TEST_SIZE: float = 0.2
     __MOVIELENS_MIN_RATING: float = 0.5
     __MOVIELENS_MAX_RATING: float = 5.0
     __RECOMMEND_MOVIES_NUM: int = 10
@@ -20,8 +22,8 @@ class Random(BaseRecommend):
 
     __evaluation = Evaluation()
 
-    def __init__(self, user_nums: int | None = None, test_size: float = 0.3):
-        super().__init__("dataset/movielens-10m", user_nums, test_size)
+    def __init__(self):
+        super().__init__("dataset/movielens-10m", self.__USER_NUMS, self.__TEST_SIZE)
 
     def __recommend(self, train, test) -> tuple[pd.DataFrame, dict]:
         # sorted unique user and movie ids
