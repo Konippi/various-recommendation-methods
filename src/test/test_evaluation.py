@@ -41,7 +41,11 @@ class Test_Evaluation:
         ],
     )
     def test_calc_recall_at_k(
-        self, true_user_id2movie_ids: dict, predicted_user_id2movie_ids: dict, k: int, expected: float
+        self,
+        true_user_id2movie_ids: dict[int, list[int]],
+        predicted_user_id2movie_ids: dict[int, list[int]],
+        k: int,
+        expected: float,
     ):
         actual = self.__evaluation.calc_recall_at_k(true_user_id2movie_ids, predicted_user_id2movie_ids, k)
         assert np.isclose(actual, expected, atol=1e-3, rtol=1e-3)
@@ -75,7 +79,11 @@ class Test_Evaluation:
         ],
     )
     def test_calc_precision_at_k(
-        self, true_user_id2movie_ids: dict, predicted_user_id2movie_ids: dict, k: int, expected: float
+        self,
+        true_user_id2movie_ids: dict[int, list[int]],
+        predicted_user_id2movie_ids: dict[int, list[int]],
+        k: int,
+        expected: float,
     ):
         actual = self.__evaluation.calc_precision_at_k(true_user_id2movie_ids, predicted_user_id2movie_ids, k)
         assert np.isclose(actual, expected, atol=1e-3, rtol=1e-3)

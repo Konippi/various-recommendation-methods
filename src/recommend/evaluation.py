@@ -6,15 +6,20 @@ class Evaluation:
     def __init__(self):
         pass
 
-    def calc_recall_at_k(self, true_user_id2movie_ids: dict, predicted_user_id2movie_ids: dict, k: int = 10) -> float:
+    def calc_recall_at_k(
+        self,
+        true_user_id2movie_ids: dict[int, list[int]],
+        predicted_user_id2movie_ids: dict[int, list[int]],
+        k: int = 10,
+    ) -> float:
         """
         Calculate recall@k
 
         Parameters
         ----------
-        true_user2movies : dict
+        true_user2movies : dict[int, list[int]]
             combination of user id and truly favorite movies
-        predicted_user2movies : dict
+        predicted_user2movies : dict[int, list[int]]
             combination of user id and predicted favorite movies
 
         Returns
@@ -52,16 +57,19 @@ class Evaluation:
         return len(set(true_movie_ids) & set(predicted_movie_ids[:k])) / len(true_movie_ids)
 
     def calc_precision_at_k(
-        self, true_user_id2movie_ids: dict, predicted_user_id2movie_ids: dict, k: int = 10
+        self,
+        true_user_id2movie_ids: dict[int, list[int]],
+        predicted_user_id2movie_ids: dict[int, list[int]],
+        k: int = 10,
     ) -> float:
         """
         Calculate precision@k
 
         Parameters
         ----------
-        true_user2movies : dict
+        true_user2movies : dict[int, list[int]]
             combination of user id and truly favorite movies
-        predicted_user2movies : dict
+        predicted_user2movies : dict[int, list[int]]
             combination of user id and predicted favorite movies
 
         Returns

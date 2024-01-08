@@ -25,7 +25,24 @@ class Random(BaseRecommend):
     def __init__(self):
         super().__init__("dataset/movielens-10m", self.__USER_NUMS, self.__TEST_SIZE)
 
-    def __recommend(self, train, test) -> tuple[pd.DataFrame, dict]:
+    def __recommend(self, train, test) -> tuple[pd.DataFrame, dict[int, list[int]]]:
+        """
+        Recommend movies for each user
+
+        Parameters
+        ----------
+        train : pd.DataFrame
+            Training dataset
+        test : pd.DataFrame
+            Test dataset
+
+        Returns
+        -------
+        predicted_ratings : list[float]
+            list of predicted ratings
+        user_id2recommended_movie_ids : dict[int, list[int]]
+            combination of user id and recommended movie ids
+        """
         # sorted unique user and movie ids
         unique_user_ids = sorted(train.user_id.unique())
         unique_movie_ids = sorted(train.movie_id.unique())
@@ -78,7 +95,30 @@ class Random(BaseRecommend):
 
         return expected_results.predicted_ratings, dict(user_id2recommended_movie_ids)
 
-    def __evaluate(self, test: pd.DataFrame, predicted_ratings: list[float], user_id2recommended_movie_ids: dict):
+    def __evaluate(
+        self, test: pd.DataFrame, predicted_ratings: list[float], user_id2recommended_movie_ids: dict[int, list[int]]
+    ) -> tuple[float, float, float]:
+        """
+        Evaluate the recommendation model
+
+        Parameters
+        ----------
+        test : pd.DataFrame
+            Test dataset
+        predicted_ratings : list[float]
+            list of predicted ratings
+        user_id2recommended_movie_ids : dict[int, list[int]]
+            combination of user id and recommended movie ids
+
+        Returns
+        -------
+        rmse : float
+            RMSE
+        recall_at_k : float
+            Recall@k
+        precision_at_k : float
+            Precision@k
+        """
         test_user_id2movie_ids = (
             test[test.rating > self.__EVALUATE_MIN_RATING]
             .groupby("user_id")
@@ -101,6 +141,9 @@ class Random(BaseRecommend):
         return rmse, recall_at_k, precision_at_k
 
     def run(self):
+        """
+        Run the recommendation model
+        """
         train, test = super().get_dataset()
         predicted_ratings, user_id2recommended_movie_ids = self.__recommend(train, test)
         rmse, recall_at_k, precision_at_k = self.__evaluate(
