@@ -86,7 +86,7 @@ class Random(BaseRecommend):
         for user_id in sorted_unique_user_ids:
             user_index = user_id2index[user_id]
 
-            # sort movies by predicted ratings
+            # sort movies by predicted ratings in descending order
             movie_indexes = np.argsort(-prediction_matrix[user_index, :])
             for movie_index in movie_indexes:
                 movie_id = sorted_unique_movie_ids[movie_index]
