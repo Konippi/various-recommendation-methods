@@ -6,7 +6,7 @@
 
 ## Recommendation Methods
 
-- [ ] Random
+- [x] Random
 - [ ] Based on Statics or Specific Rules
 - [ ] Based on Association Rules
 - [ ] User-based Collaborative Filtering
