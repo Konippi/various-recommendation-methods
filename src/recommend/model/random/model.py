@@ -44,16 +44,18 @@ class Random(BaseRecommend):
             combination of user id and recommended movie ids
         """
         # sorted unique user and movie ids
-        unique_user_ids = sorted(train.user_id.unique())
-        unique_movie_ids = sorted(train.movie_id.unique())
+        sorted_unique_user_ids = sorted(train.user_id.unique())
+        sorted_unique_movie_ids = sorted(train.movie_id.unique())
 
         # associate user and movie ids with index
-        user_id2index = dict(zip(unique_user_ids, range(len(unique_user_ids))))
-        movie_id2index = dict(zip(unique_movie_ids, range(len(unique_movie_ids))))
+        user_id2index = dict(zip(sorted_unique_user_ids, range(len(sorted_unique_user_ids))))
+        movie_id2index = dict(zip(sorted_unique_movie_ids, range(len(sorted_unique_movie_ids))))
 
         # create prediction matrix (predicted ratings: random value between 0.5 and 5.0)
         prediction_matrix = np.random.uniform(
-            self.__MOVIELENS_MIN_RATING, self.__MOVIELENS_MAX_RATING, (len(unique_user_ids), len(unique_movie_ids))
+            self.__MOVIELENS_MIN_RATING,
+            self.__MOVIELENS_MAX_RATING,
+            (len(sorted_unique_user_ids), len(sorted_unique_movie_ids)),
         )
 
         expected_results = test.copy()
@@ -81,13 +83,13 @@ class Random(BaseRecommend):
         user_id2recommended_movie_ids = defaultdict(list)
 
         user_evaluated_movies = train.groupby("user_id").agg({"movie_id": list})["movie_id"].to_dict()
-        for user_id in unique_user_ids:
+        for user_id in sorted_unique_user_ids:
             user_index = user_id2index[user_id]
 
             # sort movies by predicted ratings
             movie_indexes = np.argsort(-prediction_matrix[user_index, :])
             for movie_index in movie_indexes:
-                movie_id = unique_movie_ids[movie_index]
+                movie_id = sorted_unique_movie_ids[movie_index]
                 if movie_id not in user_evaluated_movies[user_id]:
                     user_id2recommended_movie_ids[user_id].append(movie_id)
                 if len(user_id2recommended_movie_ids[user_id]) == self.__RECOMMEND_MOVIES_NUM:
