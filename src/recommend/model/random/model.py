@@ -17,13 +17,13 @@ class Random(BaseRecommend):
     __TEST_SIZE: float = 0.2
     __MOVIELENS_MIN_RATING: float = 0.5
     __MOVIELENS_MAX_RATING: float = 5.0
-    __RECOMMEND_MOVIES_NUM: int = 10
+    __RECOMMEND_MOVIE_NUMS: int = 10
     __EVALUATE_MIN_RATING: float = 4.0
 
     __evaluation = Evaluation()
 
     def __init__(self):
-        super().__init__("dataset/movielens-10m", self.__USER_NUMS, self.__TEST_SIZE)
+        super().__init__(dataset_dir="dataset/movielens-10m", user_nums=self.__USER_NUMS, test_size=self.__TEST_SIZE)
 
     def __recommend(self, train, test) -> tuple[pd.DataFrame, dict[int, list[int]]]:
         """
@@ -92,7 +92,7 @@ class Random(BaseRecommend):
                 movie_id = sorted_unique_movie_ids[movie_index]
                 if movie_id not in user_id2evaluated_movie_ids[user_id]:
                     user_id2recommended_movie_ids[user_id].append(movie_id)
-                if len(user_id2recommended_movie_ids[user_id]) == self.__RECOMMEND_MOVIES_NUM:
+                if len(user_id2recommended_movie_ids[user_id]) == self.__RECOMMEND_MOVIE_NUMS:
                     break
 
         return expected_results.predicted_ratings, dict(user_id2recommended_movie_ids)
@@ -128,16 +128,16 @@ class Random(BaseRecommend):
             .to_dict()
         )
         # rmse
-        rmse = self.__evaluation.calc_rmse(list(test.rating), predicted_ratings)
+        rmse = self.__evaluation.calc_rmse(test.rating.to_list(), predicted_ratings)
 
         # recall@k
         recall_at_k = self.__evaluation.calc_recall_at_k(
-            test_user_id2movie_ids, user_id2recommended_movie_ids, self.__RECOMMEND_MOVIES_NUM
+            test_user_id2movie_ids, user_id2recommended_movie_ids, self.__RECOMMEND_MOVIE_NUMS
         )
 
         # precision@k
         precision_at_k = self.__evaluation.calc_precision_at_k(
-            test_user_id2movie_ids, user_id2recommended_movie_ids, self.__RECOMMEND_MOVIES_NUM
+            test_user_id2movie_ids, user_id2recommended_movie_ids, self.__RECOMMEND_MOVIE_NUMS
         )
 
         return rmse, recall_at_k, precision_at_k
@@ -149,6 +149,6 @@ class Random(BaseRecommend):
         train, test = super().get_dataset()
         predicted_ratings, user_id2recommended_movie_ids = self.__recommend(train, test)
         rmse, recall_at_k, precision_at_k = self.__evaluate(
-            test, list(predicted_ratings), user_id2recommended_movie_ids
+            test, predicted_ratings.to_list(), user_id2recommended_movie_ids
         )
         super().output(rmse=rmse, recall_at_k=recall_at_k, precision_at_k=precision_at_k)
