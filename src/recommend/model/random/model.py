@@ -82,7 +82,7 @@ class Random(BaseRecommend):
         # list of recommended movies for each user
         user_id2recommended_movie_ids = defaultdict(list)
 
-        user_evaluated_movies = train.groupby("user_id").agg({"movie_id": list})["movie_id"].to_dict()
+        user_id2evaluated_movie_ids = train.groupby("user_id").agg({"movie_id": list})["movie_id"].to_dict()
         for user_id in sorted_unique_user_ids:
             user_index = user_id2index[user_id]
 
@@ -90,7 +90,7 @@ class Random(BaseRecommend):
             movie_indexes = np.argsort(-prediction_matrix[user_index, :])
             for movie_index in movie_indexes:
                 movie_id = sorted_unique_movie_ids[movie_index]
-                if movie_id not in user_evaluated_movies[user_id]:
+                if movie_id not in user_id2evaluated_movie_ids[user_id]:
                     user_id2recommended_movie_ids[user_id].append(movie_id)
                 if len(user_id2recommended_movie_ids[user_id]) == self.__RECOMMEND_MOVIES_NUM:
                     break
