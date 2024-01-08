@@ -90,8 +90,11 @@ class Random(BaseRecommend):
             movie_indexes = np.argsort(-prediction_matrix[user_index, :])
             for movie_index in movie_indexes:
                 movie_id = sorted_unique_movie_ids[movie_index]
+
+                # recommend movies that have not been previously rated
                 if movie_id not in user_id2evaluated_movie_ids[user_id]:
                     user_id2recommended_movie_ids[user_id].append(movie_id)
+
                 if len(user_id2recommended_movie_ids[user_id]) == self.__RECOMMEND_MOVIE_NUMS:
                     break
 
