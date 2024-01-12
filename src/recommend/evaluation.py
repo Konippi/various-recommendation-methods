@@ -28,7 +28,7 @@ class Evaluation:
             average of recall@k for all users
         """
         scores = [
-            self.__recall_at_k(true_user_id2movie_ids[user_id], predicted_user_id2movie_ids[user_id], k)
+            self.__recall_at_k(true_user_id2movie_ids.get(user_id, []), predicted_user_id2movie_ids.get(user_id, []), k)
             for user_id in true_user_id2movie_ids.keys()
         ]
 
@@ -78,7 +78,9 @@ class Evaluation:
             average of precision@k for all users
         """
         scores = [
-            self.__precision_at_k(true_user_id2movie_ids[user_id], predicted_user_id2movie_ids[user_id], k)
+            self.__precision_at_k(
+                true_user_id2movie_ids.get(user_id, []), predicted_user_id2movie_ids.get(user_id, []), k
+            )
             for user_id in true_user_id2movie_ids.keys()
         ]
 
