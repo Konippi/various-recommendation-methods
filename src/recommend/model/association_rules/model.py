@@ -26,7 +26,7 @@ class AssociationRules(BaseRecommend):
     def __init__(self):
         super().__init__(dataset_dir="dataset/movielens-10m", user_nums=self.__USER_NUMS, test_size=self.__TEST_SIZE)
 
-    def __recommend(self, train: pd.DataFrame, test: pd.DataFrame) -> tuple[pd.DataFrame, defaultdict[int, list[int]]]:
+    def __recommend(self, train: pd.DataFrame, test: pd.DataFrame) -> tuple[pd.DataFrame, dict[int, list[int]]]:
         """
         Recommend movies for each user
 
