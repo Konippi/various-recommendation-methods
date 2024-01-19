@@ -31,7 +31,7 @@
    - `tags.dat`
 4. Create virtual environment for the project.
    ```sh
-   > python -m venv .
+   > poetry config --local virtualenvs.in-project true
    ```
 5. Install the required python packages.
    ```sh
