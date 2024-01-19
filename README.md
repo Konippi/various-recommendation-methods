@@ -12,6 +12,14 @@
 - [ ] Regression Model
 - [ ] ...
 
+## Required Tools
+
+- [pyenv](https://github.com/pyenv/pyenv)
+   > pyenv lets you easily switch between multiple versions of Python. It's simple, unobtrusive, and follows the UNIX tradition of single-purpose tools that do one thing well.
+
+- [poetry](https://github.com/python-poetry/poetry)
+   > Poetry helps you declare, manage and install > > dependencies of Python projects, ensuring you have the right stack everywhere.
+
 ## Initialization
 
 1. Download MovieLens 10M Dataset in zip format from the following URL.
@@ -21,7 +29,11 @@
    - `movies.dat`
    - `ratings.dat`
    - `tags.dat`
-4. Install the required python packages.
-   ```bash
-   > pip install -r requirements.txt
+4. Create virtual environment for the project.
+   ```sh
+   > python -m venv .
+   ```
+5. Install the required python packages.
+   ```sh
+   > poetry install
    ``` 
