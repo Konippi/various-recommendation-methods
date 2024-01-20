@@ -29,11 +29,13 @@
    - `movies.dat`
    - `ratings.dat`
    - `tags.dat`
-4. Create virtual environment for the project.
-   ```sh
-   > poetry config --local virtualenvs.in-project true
-   ```
-5. Install the required python packages.
+4. Install the required python packages.
    ```sh
    > poetry install
    ``` 
+
+## Note
+- How to install python packages for each environment.
+   ```sh
+   > poetry install --with ${GROUP NAME}
+   ```
