@@ -1,3 +1,13 @@
+[![python](https://img.shields.io/badge/python-v3.12-4584b6?logo=python
+)](https://github.com/python
+)
+[![github actions](https://img.shields.io/badge/tests-passed-23A458?logo=github
+)](https://github.com/python
+)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-F19C35?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![mypy](https://img.shields.io/badge/mypy-checked-1670A7)](https://github.com/python/mypy)
+[![ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+
 # Various Recommendation Methods
 
 ## :movie_camera: Dataset
