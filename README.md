@@ -48,7 +48,7 @@
    > pre-commit install
    ```
 
-## :warning: Note
+## :bulb: Tips
 - How to install python packages for each environment.
    ```sh
    > poetry install --with ${GROUP_NAME}
