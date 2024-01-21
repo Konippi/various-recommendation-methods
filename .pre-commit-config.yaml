@@ -1,18 +1,18 @@
 repos:
-  - repo: https://github.com/Konippi/various_recommendation_methods
-    rev: v0.0.1
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.14
     hooks:
+      # lint
+      - id: ruff
+        name: ruff-lint
+        description: "Run ruff to lint on changed python files"
+        entry: ruff check --force-exclude
+        language: python
+        types: [python]
       # format
       - id: ruff-format
         name: ruff-format
         description: "Run ruff to format on changed python files"
         entry: ruff format .
-        language: python
-        types: [python]
-      # lint
-      - id: ruff-lint
-        name: ruff-lint
-        description: "Run ruff to lint on changed python files"
-        entry: ruff check --force-exclude
         language: python
         types: [python]
