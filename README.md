@@ -41,5 +41,5 @@
 ## :warning: Note
 - How to install python packages for each environment.
    ```sh
-   > poetry install --with ${GROUP NAME}
+   > poetry install --with ${GROUP_NAME}
    ```
