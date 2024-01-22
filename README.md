@@ -1,7 +1,7 @@
 [![python](https://img.shields.io/badge/python-v3.12-4584b6?logo=python
 )](https://github.com/python
 )
-[![github actions](https://img.shields.io/badge/tests-passed-23A458?logo=github
+[![tests](https://img.shields.io/badge/tests-passed-23A458?logo=github
 )](https://github.com/python
 )
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-F19C35?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
